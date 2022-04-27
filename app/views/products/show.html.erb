@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<% @product.images.each do |image| %>
+ <%= image_tag(image, :width => 200) %>
+<% end %>
+
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.name %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @product.price %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description %>
+</p>
+
+<% unless @product.user_id == current_user.id %>
+<section class="section comments">
+	<div class="container">
+		<h2 class="subtitle is-5"><strong><%= @product.comments.count %></strong> Comments</h2>
+
+		<%= render @product.comments %>
+		<div class="comment-form">
+			<hr />
+			<h3 class="subtitle is-3">Leave a reply</h3>
+	 		<%= render 'comments/form' %>
+		</div>
+	</div>
+</section>
+<% end %>
+<% if @product.user_id == current_user.id %>
+	<%= link_to 'Edit', edit_product_path(@product) %> |
+<% end %>
+<%= link_to 'Back', products_path %>
